@@ -10,6 +10,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject cardPrefab;
     private void Start()
     {
-        Instantiate(cardPrefab, playerHandTransform,false); //カードを生成するときはカードを親として生成する
+        CreateCard(playerHandTransform);
     }
+    void CreateCard(Transform hand)
+    {
+        Instantiate(cardPrefab, hand, false); //カードを生成するときはカードを親として生成する
+    }
+
+    
 }
