@@ -4,5 +4,10 @@ using UnityEngine;
 
 public class CardController : MonoBehaviour
 {
-   
+    CardModel model;
+
+    public void OnServerInitialized()
+    {
+        model = new CardModel();
+    }
 }
