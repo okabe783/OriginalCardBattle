@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] CardController cardPrefab;
     void Start()
     {
-        CreateCard(playerHandTransform);
+         CreateCard(playerHandTransform);
     }
     void CreateCard(Transform hand)
     {
@@ -18,6 +18,4 @@ public class GameManager : MonoBehaviour
         CardController card = Instantiate(cardPrefab, hand, false); //カードを生成するときはカードを親として生成する
         card.Init(1);
     }
-
-    
 }

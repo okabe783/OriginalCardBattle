@@ -8,8 +8,8 @@ public class DropPlace : MonoBehaviour, IDropHandler
 {
     public void OnDrop(PointerEventData eventData)
     {
-     CardMovement card = eventData.pointerDrag.GetComponent<CardMovement>();
-        if (card != null)
+       CardMovement card = eventData.pointerDrag.GetComponent<CardMovement>();
+        if (card != null ) 
         {
             card.defaultParent = this.transform;
         }

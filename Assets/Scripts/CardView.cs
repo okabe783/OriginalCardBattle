@@ -3,17 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class CardView : MonoBehaviour
 {
-    
-    [SerializeField] Text numberText;
+    [SerializeField] Text ATText;
     [SerializeField] Image iconImage;
 
     public void Show(CardModel cardModel)
     {
-        
-        numberText.text = cardModel.number.ToString();
+        ATText.text = cardModel.AT.ToString();
         iconImage.sprite = cardModel.icon;
     }
 }
-

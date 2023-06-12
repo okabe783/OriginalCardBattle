@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dc1795604b27be4585e2a0389f3dc4b, type: 3}
   m_Name: Card2
   m_EditorClassIdentifier: 
-  cardname: Dragon
-  number: 4
-  icon: {fileID: 21300000, guid: ed68e8f1c1e846542a14b2075f3caaf4, type: 3}
+  AT: 7
+  icon: {fileID: 21300000, guid: ea04a1e10efe18a46879d32ccb9a030d, type: 3}

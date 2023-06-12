@@ -3,25 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-
-public class CardMovement : MonoBehaviour, IDragHandler ,IBeginDragHandler,IEndDragHandler　//ID～をクイックアクション→インターフェイスを実装をすると自動でコードを書いてくれる。
+public class CardMovement : MonoBehaviour, IDragHandler,IBeginDragHandler, IEndDragHandler
 {
-    public Transform defaultParent;　　//親を決めなければ、離す（OnEndDrag）時に戻ってこない
-    public void OnBeginDrag(PointerEventData eventData)    //カードを動かす
+   public Transform defaultParent;
+    public void OnBeginDrag(PointerEventData eventData)
     {
         defaultParent = transform.parent;
-        transform.SetParent(defaultParent.parent, false);
+        transform.SetParent(defaultParent.parent,false);
         GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
 
-    public void OnDrag(PointerEventData eventData) //カードをひっぱった時に行う処理
+    public void OnDrag(PointerEventData eventData)
     {
-        transform.position = eventData.position; 
+      transform.position = eventData.position;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        transform.SetParent(defaultParent, false);
+       transform.SetParent(defaultParent,false);
         GetComponent<CanvasGroup>().blocksRaycasts = true;
 
     }

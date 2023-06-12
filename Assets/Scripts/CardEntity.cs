@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO.Enumeration;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "CardEntity", menuName = "Create CardEntity")]   //projectの+でCardEntityを作ることができるようになる
+[CreateAssetMenu(fileName = "CardEntity", menuName = "Create CardEntity")] 
 //カードデータそのもの
 public class CardEntity : ScriptableObject
 {
-    public new string name;
-    public int number;       
+    public int AT;
     public Sprite icon;
+
 }
