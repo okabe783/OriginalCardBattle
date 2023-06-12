@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class CardController : MonoBehaviour
 {
-    CardModel model;
+    CardView view; //見かけに関することを操作
+    CardModel model;　//データに関することを操作
 
-    public void OnServerInitialized()
+    private void Awake()
     {
-        model = new CardModel();
+        view = GetComponent<CardView>();
+    }
+
+    public void Init(int cardID)
+    {
+        model = new CardModel(cardID);
+        view.Show(model);
     }
 }

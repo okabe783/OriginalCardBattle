@@ -7,14 +7,16 @@ public class GameManager : MonoBehaviour
     //手札にカードを生成
 
     [SerializeField] Transform playerHandTransform;
-    [SerializeField] GameObject cardPrefab;
-    private void Start()
+    [SerializeField] CardController cardPrefab;
+    void Start()
     {
         CreateCard(playerHandTransform);
     }
     void CreateCard(Transform hand)
     {
-        Instantiate(cardPrefab, hand, false); //カードを生成するときはカードを親として生成する
+        //カードの生成とデータの受け渡し
+        CardController card = Instantiate(cardPrefab, hand, false); //カードを生成するときはカードを親として生成する
+        card.Init(1);
     }
 
     
