@@ -4,13 +4,26 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    //手札にカードを生成
-
-    [SerializeField] Transform playerHandTransform;
+    [SerializeField]Transform playerHandTransform,
+                               enemyHandTransform;
     [SerializeField] CardController cardPrefab;
     void Start()
     {
-         CreateCard(playerHandTransform);
+        StartGame();
+    }
+    void StartGame()
+    {
+        SettingInitHand();
+    }
+
+    void SettingInitHand()
+    {
+        //カードをそれぞれに5枚配る
+        for (int i = 0; i < 5; i++)
+        {
+            CreateCard(playerHandTransform);
+            CreateCard(enemyHandTransform);
+        }
     }
     void CreateCard(Transform hand)
     {
