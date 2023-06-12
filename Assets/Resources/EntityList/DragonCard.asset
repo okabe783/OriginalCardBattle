@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5dc1795604b27be4585e2a0389f3dc4b, type: 3}
-  m_Name: DemonCard
+  m_Name: DragonCard
   m_EditorClassIdentifier: 
-  cardname: Demon
-  number: 3
-  icon: {fileID: 21300000, guid: 1ad136078bb640547a4e813899839458, type: 3}
+  cardname: Dragon
+  number: 4
+  icon: {fileID: 21300000, guid: ed68e8f1c1e846542a14b2075f3caaf4, type: 3}
