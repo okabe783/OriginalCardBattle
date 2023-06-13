@@ -8,6 +8,7 @@ using UnityEngine;
 public class CardEntity : ScriptableObject
 {
     public int AT;
+    public int Hp;
     public int Cost;
     public Sprite icon;
 }

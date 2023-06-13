@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: Card2
   m_EditorClassIdentifier: 
   AT: 7
+  Hp: 1
+  Cost: 1
   icon: {fileID: 21300000, guid: ea04a1e10efe18a46879d32ccb9a030d, type: 3}

@@ -7,13 +7,15 @@ using UnityEngine.UI;
 public class CardView : MonoBehaviour
 {
     [SerializeField] Text  ATText;
+    [SerializeField] Text  HpText;
     [SerializeField] Text  CostText;
     [SerializeField] Image iconImage;
 
     public void Show(CardModel cardModel)
     {
-        ATText.text = cardModel.AT.ToString();
-        ATText.text = cardModel.Cost.ToString();
+        HpText.text = cardModel.hp.ToString();
+        ATText.text = cardModel.at.ToString();
+        CostText.text = cardModel.cost.ToString();
         iconImage.sprite = cardModel.icon;
     }
 }

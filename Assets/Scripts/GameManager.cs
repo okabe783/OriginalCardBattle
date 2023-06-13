@@ -74,21 +74,23 @@ public class GameManager : MonoBehaviour
         CardController defender = playerFieldCardList[0];
         //attacker‚Ædefender‚ğí‚í‚¹‚é
         CardsBattle(attacker,defender);
+        
 
         SettingTurn();
 
         void CardsBattle(CardController attacker, CardController defender)
         {
             Debug.Log("CardBattle");
-            Debug.Log("attacker AT:" + attacker.model.AT);
-            Debug.Log("defender AT:" + defender.model.AT);
+            Debug.Log("attacker AT:" + attacker.model.at);
+            Debug.Log("defender AT:" + defender.model.at);
 
             attacker.model.Attack(defender);
             defender.model.Attack(attacker);
 
-            Debug.Log("attacker AT:" + attacker.model.AT);
-            Debug.Log("defender AT:" + defender.model.AT);
+            Debug.Log("attacker AT:" + attacker.model.at);
+            Debug.Log("defender AT:" + defender.model.at);
         }
+        
     }
     void CreateCard(Transform hand)
     {
