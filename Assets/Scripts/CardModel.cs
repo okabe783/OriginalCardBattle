@@ -6,11 +6,14 @@ using UnityEngine;
 public class CardModel 
 {
     public int AT;
+    public int Cost;
     public Sprite icon;
+    
     public CardModel(int cardID)
     {
         CardEntity cardEntity = Resources.Load<CardEntity> ("CardEntityList/Card" + cardID);
         AT = cardEntity.AT;
+        Cost = cardEntity.Cost;
         icon = cardEntity.icon;
     }
 

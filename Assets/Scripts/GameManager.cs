@@ -80,14 +80,14 @@ public class GameManager : MonoBehaviour
         void CardsBattle(CardController attacker, CardController defender)
         {
             Debug.Log("CardBattle");
-            Debug.Log("attacker HP:" + attacker.model.AT);
-            Debug.Log("defender HP:" + defender.model.AT);
+            Debug.Log("attacker AT:" + attacker.model.AT);
+            Debug.Log("defender AT:" + defender.model.AT);
 
             attacker.model.Attack(defender);
             defender.model.Attack(attacker);
 
-            Debug.Log("attacker HP:" + attacker.model.AT);
-            Debug.Log("defender HP:" + defender.model.AT);
+            Debug.Log("attacker AT:" + attacker.model.AT);
+            Debug.Log("defender AT:" + defender.model.AT);
         }
     }
     void CreateCard(Transform hand)
