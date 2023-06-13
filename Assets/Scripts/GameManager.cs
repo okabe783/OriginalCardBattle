@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]Transform playerHandTransform,
                                enemyHandTransform;
     [SerializeField] CardController cardPrefab;
+
+    bool isPlayerSetting;
     void Start()
     {
         StartGame();
@@ -14,6 +16,8 @@ public class GameManager : MonoBehaviour
     void StartGame()
     {
         SettingInitHand();
+        isPlayerSetting = true;
+        TurnCalc();
     }
 
     void SettingInitHand()
@@ -24,6 +28,34 @@ public class GameManager : MonoBehaviour
             CreateCard(playerHandTransform);
             CreateCard(enemyHandTransform);
         }
+    }
+
+    private void TurnCalc()
+    {
+        if (isPlayerSetting)
+        {
+            PlayerSetting();
+        }
+        else
+        {
+            EnemySetting();
+        }
+    }
+
+    public void SettingTurn()
+    {
+        isPlayerSetting = !isPlayerSetting;
+        TurnCalc();
+    }
+
+    void PlayerSetting()
+    {
+        Debug.Log("俺のターン");
+    }
+    void EnemySetting()
+    {
+        Debug.Log("相手のターン");
+        SettingTurn();
     }
     void CreateCard(Transform hand)
     {
