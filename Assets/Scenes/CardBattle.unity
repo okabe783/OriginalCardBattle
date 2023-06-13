@@ -510,7 +510,7 @@ GameObject:
   - component: {fileID: 767032922}
   - component: {fileID: 767032921}
   m_Layer: 5
-  m_Name: 'OKButton '
+  m_Name: 'SettingButton '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -580,7 +580,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 767032922}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1698838974}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: SettingTurn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &767032922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1028,6 +1040,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerHandTransform: {fileID: 879534048}
   enemyHandTransform: {fileID: 840263067}
+  playerFieldTransform: {fileID: 1762081920}
+  enemyFieldTransform: {fileID: 407072677}
   cardPrefab: {fileID: 2034964504655564107, guid: f4f5d4a24d737684694733dea8be85ea, type: 3}
 --- !u!1 &1762081919
 GameObject:

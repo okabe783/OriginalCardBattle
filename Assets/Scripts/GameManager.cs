@@ -5,7 +5,9 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField]Transform playerHandTransform,
-                               enemyHandTransform;
+                               enemyHandTransform,
+                              playerFieldTransform,
+                              enemyFieldTransform;
     [SerializeField] CardController cardPrefab;
 
     bool isPlayerSetting;
@@ -55,7 +57,38 @@ public class GameManager : MonoBehaviour
     void EnemySetting()
     {
         Debug.Log("相手のターン");
+        /*場にカードをだす*/
+        //手札のカードリストを取得
+        CardController[]handcardList = enemyHandTransform.GetComponentsInChildren<CardController>();
+        //場に出すカードを選択
+        CardController enemycard = handcardList[0];
+        //カードを移動
+        enemycard.movement.SetCardTransform(enemyFieldTransform);
+        /* 攻撃比較 */
+        //フィールドのカードリストを取得
+        CardController[] fieldCardList = enemyFieldTransform.GetComponentsInChildren<CardController>();
+        //attackerカードを選択
+        CardController attacker = fieldCardList[0];
+        //defenderカードを選択
+        CardController[] playerFieldCardList = playerFieldTransform.GetComponentsInChildren<CardController>();
+        CardController defender = playerFieldCardList[0];
+        //attackerとdefenderを戦わせる
+        CardsBattle(attacker,defender);
+
         SettingTurn();
+
+        void CardsBattle(CardController attacker, CardController defender)
+        {
+            Debug.Log("CardBattle");
+            Debug.Log("attacker HP:" + attacker.model.AT);
+            Debug.Log("defender HP:" + defender.model.AT);
+
+            attacker.model.Attack(defender);
+            defender.model.Attack(attacker);
+
+            Debug.Log("attacker HP:" + attacker.model.AT);
+            Debug.Log("defender HP:" + defender.model.AT);
+        }
     }
     void CreateCard(Transform hand)
     {

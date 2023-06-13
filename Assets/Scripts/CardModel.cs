@@ -13,4 +13,14 @@ public class CardModel
         AT = cardEntity.AT;
         icon = cardEntity.icon;
     }
+
+      void Damage(int dmg)
+    {
+
+    }
+
+    public void Attack(CardController card)
+    {
+        card.model.Damage(AT);
+    }
 }
