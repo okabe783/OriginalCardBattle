@@ -89,6 +89,8 @@ public class GameManager : MonoBehaviour
 
             Debug.Log("attacker AT:" + attacker.model.at);
             Debug.Log("defender AT:" + defender.model.at);
+            attacker.CheckAlive();
+            defender.CheckAlive();
         }
         
     }

@@ -18,4 +18,15 @@ public class CardController : MonoBehaviour
         model = new CardModel(cardID);
         view.Show(model);
     }
+    public void CheckAlive()
+    {
+        if (model.useCard)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
 }
