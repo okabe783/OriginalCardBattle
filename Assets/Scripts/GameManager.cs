@@ -13,8 +13,12 @@ public class GameManager : MonoBehaviour
                               enemyFieldTransform;
     [SerializeField] CardController cardPrefab;
     [SerializeField] GameObject Playerscore_text;
+    [SerializeField] GameObject Enemyscore_text;
+    [SerializeField] GameObject resultPanel;
+    [SerializeField] Text resultText;
 
-    public static float score;
+    public static float playerscore;
+    public static float enemyscore;
     public static float score_before;
     bool isPlayerSetting;
 
@@ -29,20 +33,49 @@ public class GameManager : MonoBehaviour
         //Playerscore_text = GameObject.Find("Score");
         StartGame();
 
-        score = 0;
+        playerscore = 0;
+        enemyscore = 0;
     }
 
     public void Update()
     {
         Text playerscore_text = Playerscore_text.GetComponent<Text>();
-        playerscore_text.text = score.ToString();
-
+        playerscore_text.text = playerscore.ToString();
+        Text enemyscore_text = Enemyscore_text.GetComponent<Text>();
+        enemyscore_text.text = enemyscore.ToString();
     }
     void StartGame()
     {
+        resultPanel.SetActive(false);
         SettingInitHand();
         isPlayerSetting = true;
         TurnCalc();
+    }
+
+    public void ReStart()
+    {
+        //handとFieldのカードを削除
+        foreach(Transform card in playerHandTransform)
+        {
+               Destroy(card.gameObject);
+        }
+        foreach (Transform card in playerFieldTransform)
+        {
+            Destroy(card.gameObject);
+        }
+        foreach (Transform card in enemyHandTransform)
+        {
+            Destroy(card.gameObject);
+        }
+        foreach (Transform card in enemyFieldTransform)
+        {
+            Destroy(card.gameObject);
+        }
+
+        //デッキを生成
+        playerDeck = new List<int>() { 1, 2, 3, 4, 5 };
+                   enemyDeck = new List<int>() { 1, 2, 3, 4, 5 };
+        StartGame();
     }
 
     void SettingInitHand()
@@ -128,19 +161,38 @@ public class GameManager : MonoBehaviour
             defender.CheckAlive();
         }  
     }
-   public  void ScoreUp()
+   public  void PlayerScoreUp()
     {
-        score ++;
+        playerscore ++;
     }
-   //      public void ScoreCard(CardController attacker, bool isPlayerCard)  //もしカードを比べて勝ったならばスコアを＋１する
-     //  {
-      //   if (isPlayerCard)
-       //{
-        //    score_before = score;
-       // }
-    //  else
-    // {
-
-    //            }
-    //   }
+    public void EnemyScoreUp()
+    {
+        enemyscore ++;
+    }
+    //public void ScoreCard(CardController attacker, bool isPlayerCard)  //もしカードを比べて勝ったならばスコアを＋１する
+    //{
+    //    if (isPlayerCard)
+    //    {
+    //        enemyHeroHp -= attacker.model.hp;
+    //    }
+    //    else
+    //    {
+    //        playerHeroHp -= attacker.model.hp;
+    //    }
+    //    attacker.SetCanAttack(false);
+    //    ShowHeroHP();
+    //    CheckScore();
+    // }
+    void CheckScore()   //リザルト画面の表示
+    {
+        resultPanel.SetActive(true);
+        if(playerscore <= 5)
+        {
+            resultText.text = "LOSE";
+        }
+        else
+        {
+            resultText.text = "WIN";
+        }
+    }
 }

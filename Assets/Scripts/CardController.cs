@@ -27,11 +27,12 @@ public class CardController : MonoBehaviour
     {
         if (model.useCard)
         {
-            gameManager.ScoreUp();
-                      
+            gameManager.PlayerScoreUp();
         }
-        
+        else
+        {
+            gameManager.EnemyScoreUp();
+        }
             Destroy(this.gameObject);
-        
     }
 }

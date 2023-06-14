@@ -9,7 +9,8 @@ public class CardModel
     public int cost;
     public int hp;
     public Sprite icon;
-  public  bool useCard;  //使用したかどうか
+    public  bool useCard;  //使用したかどうか←ここを変える
+
     
     public CardModel(int cardID)
     {
