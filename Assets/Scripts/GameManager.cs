@@ -1,16 +1,21 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField]Transform playerHandTransform,
+    [SerializeField] Transform playerHandTransform,
                                enemyHandTransform,
                               playerFieldTransform,
                               enemyFieldTransform;
     [SerializeField] CardController cardPrefab;
 
     bool isPlayerSetting;
+
+    List<int> playerDeck = new List<int>(){1,2,3,4,5},
+              enemyDeck = new List<int>() {1,2,3,4,5};
+
     void Start()
     {
         StartGame();
@@ -27,9 +32,21 @@ public class GameManager : MonoBehaviour
         //カードをそれぞれに5枚配る
         for (int i = 0; i < 5; i++)
         {
-            CreateCard(playerHandTransform);
-            CreateCard(enemyHandTransform);
+            GiveCardToHand(playerDeck,playerHandTransform);
+            GiveCardToHand(enemyDeck,enemyHandTransform);
         }
+    }
+    void GiveCardToHand(List<int> deck, Transform hand)
+    {
+        int cardID = deck[0];
+        deck.RemoveAt(0);
+        CreateCard(cardID,hand);
+    }
+    void CreateCard(int cardID,Transform hand)
+    {
+        //カードの生成とデータの受け渡し
+        CardController card = Instantiate(cardPrefab, hand, false); //カードを生成するときはカードを親として生成する
+        card.Init(cardID);
     }
 
     private void TurnCalc()
@@ -93,11 +110,7 @@ public class GameManager : MonoBehaviour
             defender.CheckAlive();
         }
         
+        
     }
-    void CreateCard(Transform hand)
-    {
-        //カードの生成とデータの受け渡し
-        CardController card = Instantiate(cardPrefab, hand, false); //カードを生成するときはカードを親として生成する
-        card.Init(1);
-    }
+   
 }
