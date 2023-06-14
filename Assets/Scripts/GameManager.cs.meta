@@ -3,7 +3,12 @@ guid: af29837684bc5f440963575f2e2c9a46
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - playerHandTransform: {instanceID: 0}
+  - enemyHandTransform: {instanceID: 0}
+  - playerFieldTransform: {instanceID: 0}
+  - enemyFieldTransform: {instanceID: 0}
+  - cardPrefab: {fileID: 2034964504655564107, guid: f4f5d4a24d737684694733dea8be85ea, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

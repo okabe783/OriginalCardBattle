@@ -1,7 +1,9 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,15 +12,31 @@ public class GameManager : MonoBehaviour
                               playerFieldTransform,
                               enemyFieldTransform;
     [SerializeField] CardController cardPrefab;
+    [SerializeField] GameObject Playerscore_text;
 
+    public static float score;
+    public static float score_before;
     bool isPlayerSetting;
 
+    //デッキの作成
     List<int> playerDeck = new List<int>(){1,2,3,4,5},
               enemyDeck = new List<int>() {1,2,3,4,5};
 
+    
+
     void Start()
     {
+        //Playerscore_text = GameObject.Find("Score");
         StartGame();
+
+        score = 0;
+    }
+
+    public void Update()
+    {
+        Text playerscore_text = Playerscore_text.GetComponent<Text>();
+        playerscore_text.text = score.ToString();
+
     }
     void StartGame()
     {
@@ -98,19 +116,31 @@ public class GameManager : MonoBehaviour
         void CardsBattle(CardController attacker, CardController defender)
         {
             Debug.Log("CardBattle");
-            Debug.Log("attacker AT:" + attacker.model.at);
-            Debug.Log("defender AT:" + defender.model.at);
+            Debug.Log("attacker HP:" + attacker.model.hp);
+            Debug.Log("defender HP:" + defender.model.hp);
 
             attacker.model.Attack(defender);
             defender.model.Attack(attacker);
 
-            Debug.Log("attacker AT:" + attacker.model.at);
-            Debug.Log("defender AT:" + defender.model.at);
+            Debug.Log("attacker HP:" + attacker.model.hp);
+            Debug.Log("defender HP:" + defender.model.hp);
             attacker.CheckAlive();
             defender.CheckAlive();
-        }
-        
-        
+        }  
     }
-   
+   public  void ScoreUp()
+    {
+        score ++;
+    }
+   //      public void ScoreCard(CardController attacker, bool isPlayerCard)  //もしカードを比べて勝ったならばスコアを＋１する
+     //  {
+      //   if (isPlayerCard)
+       //{
+        //    score_before = score;
+       // }
+    //  else
+    // {
+
+    //            }
+    //   }
 }

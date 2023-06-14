@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class CardController : MonoBehaviour
 {
+    GameManager gameManager;
+
     CardView view; //Œ©‚©‚¯‚ÉŠÖ‚·‚é‚±‚Æ‚ğ‘€ì 
    public CardModel model;//ƒf[ƒ^‚ÉŠÖ‚·‚é‚±‚Æ‚ğ‘€ì
     public CardMovement movement; //ˆÚ“®‚ÉŠÖ‚·‚é‚±‚Æ‚ğ‘€ì
@@ -12,6 +15,8 @@ public class CardController : MonoBehaviour
     {
         view = GetComponent<CardView>();
         movement = GetComponent<CardMovement>();
+        gameManager = FindObjectOfType<GameManager>();
+
     }
     public void Init(int cardID)
     {
@@ -22,11 +27,11 @@ public class CardController : MonoBehaviour
     {
         if (model.useCard)
         {
-            Destroy(this.gameObject);
+            gameManager.ScoreUp();
+                      
         }
-        else
-        {
+        
             Destroy(this.gameObject);
-        }
+        
     }
 }
