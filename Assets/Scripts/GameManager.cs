@@ -26,18 +26,22 @@ public class GameManager : MonoBehaviour
     List<int> playerDeck = new List<int>(){1,2,3,4,5},
               enemyDeck = new List<int>() {1,2,3,4,5};
 
+    [SerializeField] Text playerHeroHpText,
+                          enemyHeroHpText;
+
+    int playerHeroHp;
+    int enemyHeroHp;
     
 
     void Start()
     {
-        //Playerscore_text = GameObject.Find("Score");
         StartGame();
 
         playerscore = 0;
         enemyscore = 0;
     }
 
-    public void Update()
+    public void Update()　　//スコア
     {
         Text playerscore_text = Playerscore_text.GetComponent<Text>();
         playerscore_text.text = playerscore.ToString();
@@ -52,7 +56,7 @@ public class GameManager : MonoBehaviour
         TurnCalc();
     }
 
-    public void ReStart()
+    public void ReStart() //タイトルから再スタートをする処理
     {
         //handとFieldのカードを削除
         foreach(Transform card in playerHandTransform)
@@ -122,7 +126,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("俺のターン");
     }
-    void EnemySetting()
+    void EnemySetting()　　//相手がカードを出したタイミングでバトルをする
     {
         Debug.Log("相手のターン");
         /*場にカードをだす*/
@@ -157,8 +161,9 @@ public class GameManager : MonoBehaviour
 
             Debug.Log("attacker HP:" + attacker.model.hp);
             Debug.Log("defender HP:" + defender.model.hp);
-            attacker.CheckAlive();
-            defender.CheckAlive();
+            attacker.CheckAlive(defender);
+            CheckScore();
+            //defender.CheckAlive();
         }  
     }
    public  void PlayerScoreUp()
@@ -169,30 +174,19 @@ public class GameManager : MonoBehaviour
     {
         enemyscore ++;
     }
-    //public void ScoreCard(CardController attacker, bool isPlayerCard)  //もしカードを比べて勝ったならばスコアを＋１する
-    //{
-    //    if (isPlayerCard)
-    //    {
-    //        enemyHeroHp -= attacker.model.hp;
-    //    }
-    //    else
-    //    {
-    //        playerHeroHp -= attacker.model.hp;
-    //    }
-    //    attacker.SetCanAttack(false);
-    //    ShowHeroHP();
-    //    CheckScore();
-    // }
+   
     void CheckScore()   //リザルト画面の表示
     {
-        resultPanel.SetActive(true);
-        if(playerscore <= 5)
-        {
-            resultText.text = "LOSE";
-        }
-        else
+       
+        if (playerscore >= 3)
         {
             resultText.text = "WIN";
+            resultPanel.SetActive(true);
+        }
+        else if (enemyscore >= 3) 
+        {
+            resultText.text = "LOSE";
+            resultPanel.SetActive(true);
         }
     }
 }

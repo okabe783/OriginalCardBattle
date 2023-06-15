@@ -9,8 +9,7 @@ public class CardModel
     public int cost;
     public int hp;
     public Sprite icon;
-    public  bool useCard;  //使用したかどうか←ここを変える
-
+    public  bool isAlive;
     
     public CardModel(int cardID)
     {
@@ -19,7 +18,7 @@ public class CardModel
         hp = cardEntity.Hp;
         cost = cardEntity.Cost;
         icon = cardEntity.icon;
-        useCard = true;
+        isAlive = true;
     }
 
       void Damage(int dmg)
@@ -28,7 +27,7 @@ public class CardModel
         if (hp <= 0)
         {
             hp = 0;
-            useCard = false;　　//戦わせたら使用済みにする
+            isAlive = false;
         }
     }
 

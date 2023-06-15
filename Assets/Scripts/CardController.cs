@@ -23,16 +23,18 @@ public class CardController : MonoBehaviour
         model = new CardModel(cardID);
         view.Show(model);
     }
-    public void CheckAlive()
+    public void CheckAlive(CardController defender)  //ÉXÉRÉAîªíË
     {
-        if (model.useCard)
+        if (model.isAlive == false)
         {
+            
             gameManager.PlayerScoreUp();
         }
         else
         {
             gameManager.EnemyScoreUp();
         }
-            Destroy(this.gameObject);
+        Destroy(this.gameObject);
+        Destroy(defender.gameObject);  
     }
 }
