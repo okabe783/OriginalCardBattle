@@ -9,8 +9,8 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] Transform playerHandTransform,
                                enemyHandTransform,
-                              playerFieldTransform,
-                              enemyFieldTransform;
+                               playerFieldTransform,
+                               enemyFieldTransform;
     [SerializeField] CardController cardPrefab;
     [SerializeField] GameObject Playerscore_text;
     [SerializeField] GameObject Enemyscore_text;
@@ -31,7 +31,23 @@ public class GameManager : MonoBehaviour
 
     int playerHeroHp;
     int enemyHeroHp;
-    
+
+    [SerializeField] Text playerManaCostText;
+    [SerializeField] Text enemyManaCostText;
+
+    public  int playerManaCost;
+    public  int enemyManaCost;
+    public int playerDefaultManaCost;
+    public int enemyDefaultManaCost;
+    public static GameManager instance;
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+
 
     void Start()
     {
@@ -51,10 +67,36 @@ public class GameManager : MonoBehaviour
     void StartGame()
     {
         resultPanel.SetActive(false);
+        playerManaCost = 1;
+        enemyManaCost = 1;
+        playerDefaultManaCost = 1;
+        enemyDefaultManaCost = 1;
+        ShowManaCost();
         SettingInitHand();
+       
         isPlayerSetting = true;
         TurnCalc();
     }
+
+    public  void ShowManaCost()
+    {
+        playerManaCostText.text = playerManaCost.ToString();
+        enemyManaCostText.text = enemyManaCost.ToString();
+
+    }
+    public void ReduceManaCost(int cost, bool isPlayerCard)
+    {
+        if (isPlayerCard)
+        {
+            playerManaCost -= cost;
+        }
+        else
+        {
+            enemyManaCost -= cost;
+        }
+        ShowManaCost();
+    }
+
 
     public void ReStart() //タイトルから再スタートをする処理
     {
@@ -75,10 +117,22 @@ public class GameManager : MonoBehaviour
         {
             Destroy(card.gameObject);
         }
+        
 
         //デッキを生成
         playerDeck = new List<int>() { 1, 2, 3, 4, 5 };
-                   enemyDeck = new List<int>() { 1, 2, 3, 4, 5 };
+         enemyDeck = new List<int>() { 1, 2, 3, 4, 5 };
+
+        if (playerscore == 3)
+        {
+            playerscore = 0;
+        }
+        else
+        {
+            enemyscore = 0;
+        }
+       
+
         StartGame();
     }
 
@@ -89,6 +143,7 @@ public class GameManager : MonoBehaviour
         {
             GiveCardToHand(playerDeck,playerHandTransform);
             GiveCardToHand(enemyDeck,enemyHandTransform);
+            Shuffle();
         }
     }
     void GiveCardToHand(List<int> deck, Transform hand)
@@ -104,6 +159,26 @@ public class GameManager : MonoBehaviour
         card.Init(cardID);
     }
 
+    void Shuffle()
+    {
+        //整数nの初期値はデッキ枚数
+        int n = enemyDeck.Count;
+
+        //nが1より小さくなるまで繰り返す
+        while(n > 1)
+        {
+            n--;
+
+            //kは0～n+1の間のランダムな値
+            int k =UnityEngine.Random.Range(0, n + 1);
+
+            //k番目のカードをtempに代入
+            int temp = enemyDeck[k];
+            enemyDeck[k] = enemyDeck[n];
+            enemyDeck[n] = temp;
+        }
+    }
+
     private void TurnCalc()
     {
         if (isPlayerSetting)
@@ -112,13 +187,20 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            EnemySetting();
+          StartCoroutine(EnemySetting());
         }
     }
 
     public void SettingTurn()
     {
         isPlayerSetting = !isPlayerSetting;
+        if (isPlayerSetting)
+        playerManaCost = playerDefaultManaCost;
+        else
+        {
+            enemyManaCost = enemyDefaultManaCost;
+        }
+        
         TurnCalc();
     }
 
@@ -126,16 +208,22 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("俺のターン");
     }
-    void EnemySetting()　　//相手がカードを出したタイミングでバトルをする
+    IEnumerator EnemySetting()　　//相手がカードを出したタイミングでバトルをする
     {
         Debug.Log("相手のターン");
+
+        yield return new WaitForSeconds(1);
+
         /*場にカードをだす*/
         //手札のカードリストを取得
         CardController[]handcardList = enemyHandTransform.GetComponentsInChildren<CardController>();
         //場に出すカードを選択
         CardController enemycard = handcardList[0];
         //カードを移動
-        enemycard.movement.SetCardTransform(enemyFieldTransform);
+        StartCoroutine(enemycard.movement.MoveToField(enemyFieldTransform));
+
+        yield return new WaitForSeconds(1);
+
         /* 攻撃比較 */
         //フィールドのカードリストを取得
         CardController[] fieldCardList = enemyFieldTransform.GetComponentsInChildren<CardController>();
@@ -145,9 +233,11 @@ public class GameManager : MonoBehaviour
         CardController[] playerFieldCardList = playerFieldTransform.GetComponentsInChildren<CardController>();
         CardController defender = playerFieldCardList[0];
         //attackerとdefenderを戦わせる
-        CardsBattle(attacker,defender);
-        
+        StartCoroutine(attacker.movement.MoveToTarget(defender.transform));
 
+        CardsBattle(attacker,defender);
+
+        yield return new WaitForSeconds(1);
         SettingTurn();
 
         void CardsBattle(CardController attacker, CardController defender)

@@ -10,6 +10,7 @@ public class CardModel
     public int hp;
     public Sprite icon;
     public  bool isAlive;
+    public bool isFieldCard;
     
     public CardModel(int cardID)
     {
