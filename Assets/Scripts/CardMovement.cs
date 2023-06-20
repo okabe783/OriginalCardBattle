@@ -70,9 +70,6 @@ public class CardMovement : MonoBehaviour, IDragHandler,IBeginDragHandler, IEndD
         //DOTWEEN‚ÅƒJ[ƒh‚ğTarget‚ÉˆÚ“®
         transform.DOMove(target.position, 0.25f);
         yield return new WaitForSeconds(0.25f);
-        transform.DOMove(currenPosition, 0.25f);
-        yield return new WaitForSeconds(0.25f);
-        transform.SetParent(defaultParent);
     }
 
     void Start()
