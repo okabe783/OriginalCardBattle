@@ -96,6 +96,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultParent: {fileID: 0}
+  isDraggable: 0
 --- !u!225 &2588547611972129769
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -379,8 +380,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 34.9093, y: -47.5927}
-  m_SizeDelta: {x: 30.1807, y: 24.8145}
+  m_AnchoredPosition: {x: 43.6759, y: -51.679}
+  m_SizeDelta: {x: 12.6475, y: 16.641}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1985511064941505663
 CanvasRenderer:

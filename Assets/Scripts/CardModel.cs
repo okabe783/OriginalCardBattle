@@ -20,6 +20,7 @@ public class CardModel
         cost = cardEntity.Cost;
         icon = cardEntity.icon;
         isAlive = true;
+        
     }
 
       void Damage(int dmg)

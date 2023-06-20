@@ -23,8 +23,8 @@ public class GameManager : MonoBehaviour
     bool isPlayerSetting;
 
     //デッキの作成
-    List<int> playerDeck = new List<int>(){1,2,3,4,5},
-              enemyDeck = new List<int>() {1,2,3,4,5};
+    List<int> playerDeck = new List<int>(){1,2,3,4,5,6,7,8},
+              enemyDeck = new List<int>() {1,2,3,4,5,6,7,8};
 
     [SerializeField] Text playerHeroHpText,
                           enemyHeroHpText;
@@ -73,8 +73,11 @@ public class GameManager : MonoBehaviour
         enemyDefaultManaCost = 1;
         ShowManaCost();
         SettingInitHand();
-       
+      
+
+
         isPlayerSetting = true;
+      
         TurnCalc();
     }
 
@@ -117,11 +120,11 @@ public class GameManager : MonoBehaviour
         {
             Destroy(card.gameObject);
         }
-        
+
 
         //デッキを生成
-        playerDeck = new List<int>() { 1, 2, 3, 4, 5 };
-         enemyDeck = new List<int>() { 1, 2, 3, 4, 5 };
+        playerDeck = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8};
+         enemyDeck = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8};
 
         if (playerscore == 3)
         {
@@ -138,8 +141,8 @@ public class GameManager : MonoBehaviour
 
     void SettingInitHand()
     {
-        //カードをそれぞれに5枚配る
-        for (int i = 0; i < 5; i++)
+        //カードをそれぞれに8枚配る
+        for (int i = 0; i < 8; i++)
         {
             GiveCardToHand(playerDeck,playerHandTransform);
             GiveCardToHand(enemyDeck,enemyHandTransform);
@@ -150,12 +153,12 @@ public class GameManager : MonoBehaviour
     {
         int cardID = deck[0];
         deck.RemoveAt(0);
-        CreateCard(cardID,hand);
+        CreateCard(cardID, hand) ;      
     }
     void CreateCard(int cardID,Transform hand)
     {
         //カードの生成とデータの受け渡し
-        CardController card = Instantiate(cardPrefab, hand, false); //カードを生成するときはカードを親として生成する
+        CardController card = Instantiate(cardPrefab, hand); //カードを生成するときはカードを親として生成する
         card.Init(cardID);
     }
 
@@ -184,10 +187,12 @@ public class GameManager : MonoBehaviour
         if (isPlayerSetting)
         {
             PlayerSetting();
+          
         }
         else
         {
           StartCoroutine(EnemySetting());
+           
         }
     }
 
@@ -214,11 +219,13 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(1);
 
+        
         /*場にカードをだす*/
         //手札のカードリストを取得
         CardController[]handcardList = enemyHandTransform.GetComponentsInChildren<CardController>();
         //場に出すカードを選択
-        CardController enemycard = handcardList[0];
+        int rnd = Random.Range(1, 2);
+        CardController enemycard = handcardList[rnd];
         //カードを移動
         StartCoroutine(enemycard.movement.MoveToField(enemyFieldTransform));
 
@@ -268,7 +275,7 @@ public class GameManager : MonoBehaviour
     void CheckScore()   //リザルト画面の表示
     {
        
-        if (playerscore >= 3)
+        if (playerscore >= 4)
         {
             resultText.text = "WIN";
             resultPanel.SetActive(true);

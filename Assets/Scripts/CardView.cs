@@ -11,11 +11,11 @@ public class CardView : MonoBehaviour
     [SerializeField] Text  CostText;
     [SerializeField] Image iconImage;
 
-    public void Show(CardModel cardModel)
+    public void SetCard(CardModel cardModel)
     {
         HpText.text = cardModel.hp.ToString();
         ATText.text = cardModel.at.ToString();
         CostText.text = cardModel.cost.ToString();
-        iconImage.sprite = cardModel.icon;
+        iconImage.sprite = cardModel.icon;           
     }
 }

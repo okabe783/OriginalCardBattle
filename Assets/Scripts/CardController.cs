@@ -21,8 +21,9 @@ public class CardController : MonoBehaviour
     public void Init(int cardID)
     {
         model = new CardModel(cardID);
-        view.Show(model);
+        view.SetCard(model);
     }
+
     public void CheckAlive(CardController defender)  //ÉXÉRÉAîªíË
     {
         if (model.isAlive == false)
