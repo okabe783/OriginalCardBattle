@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 //カードデータとその処理
@@ -11,8 +9,9 @@ public class CardModel
     public Sprite icon;
     public  bool isAlive;
     public bool isFieldCard;
+    public bool isEnemyCard;
     
-    public CardModel(int cardID)
+    public CardModel(int cardID,bool isEnemyCard)
     {
         CardEntity cardEntity = Resources.Load<CardEntity> ("CardEntityList/Card" + cardID);
         at = cardEntity.AT;
@@ -20,6 +19,7 @@ public class CardModel
         cost = cardEntity.Cost;
         icon = cardEntity.icon;
         isAlive = true;
+        this.isEnemyCard = isEnemyCard;
         
     }
 

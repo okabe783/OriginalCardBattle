@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,12 +8,14 @@ public class CardView : MonoBehaviour
     [SerializeField] Text  HpText;
     [SerializeField] Text  CostText;
     [SerializeField] Image iconImage;
+    [SerializeField] GameObject maskPanel;
 
     public void SetCard(CardModel cardModel)
     {
         HpText.text = cardModel.hp.ToString();
         ATText.text = cardModel.at.ToString();
         CostText.text = cardModel.cost.ToString();
-        iconImage.sprite = cardModel.icon;           
+        iconImage.sprite = cardModel.icon;     
+        maskPanel.SetActive(cardModel.isEnemyCard);
     }
 }

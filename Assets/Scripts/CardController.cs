@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class CardController : MonoBehaviour
 {
@@ -18,9 +15,9 @@ public class CardController : MonoBehaviour
         gameManager = FindObjectOfType<GameManager>();
 
     }
-    public void Init(int cardID)
+    public void Init(int cardID,bool isEnemyTurn)
     {
-        model = new CardModel(cardID);
+        model = new CardModel(cardID,isEnemyTurn);
         view.SetCard(model);
     }
 

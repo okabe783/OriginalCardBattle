@@ -1,7 +1,5 @@
-using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,9 +27,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] Text playerHeroHpText,
                           enemyHeroHpText;
 
-    int playerHeroHp;
-    int enemyHeroHp;
-
     [SerializeField] Text playerManaCostText;
     [SerializeField] Text enemyManaCostText;
 
@@ -40,6 +35,7 @@ public class GameManager : MonoBehaviour
     public int playerDefaultManaCost;
     public int enemyDefaultManaCost;
     public static GameManager instance;
+    public bool isEnemyCardGenerateTurn = false;
     private void Awake()
     {
         if (instance == null)
@@ -145,8 +141,11 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < 8; i++)
         {
             GiveCardToHand(playerDeck,playerHandTransform);
-            GiveCardToHand(enemyDeck,enemyHandTransform);
+            //isEnemyCardGenerateTurn=true;
+
             Shuffle();
+            GiveCardToHand(enemyDeck,enemyHandTransform);
+            //Debug.Log(enemyDeck.Count);
         }
     }
     void GiveCardToHand(List<int> deck, Transform hand)
@@ -159,7 +158,7 @@ public class GameManager : MonoBehaviour
     {
         //カードの生成とデータの受け渡し
         CardController card = Instantiate(cardPrefab, hand); //カードを生成するときはカードを親として生成する
-        card.Init(cardID);
+        card.Init(cardID,isEnemyCardGenerateTurn);
     }
 
     void Shuffle()
@@ -168,7 +167,7 @@ public class GameManager : MonoBehaviour
         int n = enemyDeck.Count;
 
         //nが1より小さくなるまで繰り返す
-        while(n > 1)
+        while(n > 0)
         {
             n--;
 
