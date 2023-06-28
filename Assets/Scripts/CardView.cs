@@ -18,4 +18,10 @@ public class CardView : MonoBehaviour
         iconImage.sprite = cardModel.icon;     
         maskPanel.SetActive(cardModel.isEnemyCard);
     }
+
+    public void PanelActive(bool isActive)
+    {
+        maskPanel.SetActive(isActive);
+    }
+
 }

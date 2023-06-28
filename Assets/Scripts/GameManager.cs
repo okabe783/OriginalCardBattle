@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
     public int enemyDefaultManaCost;
     public static GameManager instance;
     public bool isEnemyCardGenerateTurn = false;
+    bool _isPuttingCard;
     private void Awake()
     {
         if (instance == null)
@@ -48,7 +49,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         StartGame();
-
         playerscore = 0;
         enemyscore = 0;
     }
@@ -134,17 +134,17 @@ public class GameManager : MonoBehaviour
 
         StartGame();
     }
-
     void SettingInitHand()
     {
         //カードをそれぞれに8枚配る
         for (int i = 0; i < 8; i++)
         {
             GiveCardToHand(playerDeck,playerHandTransform);
-            //isEnemyCardGenerateTurn=true;
+            isEnemyCardGenerateTurn=true;
 
             Shuffle();
             GiveCardToHand(enemyDeck,enemyHandTransform);
+            isEnemyCardGenerateTurn = false;
             //Debug.Log(enemyDeck.Count);
         }
     }
@@ -158,6 +158,11 @@ public class GameManager : MonoBehaviour
     {
         //カードの生成とデータの受け渡し
         CardController card = Instantiate(cardPrefab, hand); //カードを生成するときはカードを親として生成する
+
+        if(isEnemyCardGenerateTurn == true)
+        {
+            card.gameObject.GetComponent<CardView>().PanelActive(true);
+        }
         card.Init(cardID,isEnemyCardGenerateTurn);
     }
 
@@ -214,30 +219,31 @@ public class GameManager : MonoBehaviour
     }
     IEnumerator EnemySetting()　　//相手がカードを出したタイミングでバトルをする
     {
+        //defenderカードを選択
+        CardController[] playerFieldCardList = playerFieldTransform.GetComponentsInChildren<CardController>();
+        if (playerFieldCardList.Length == 0) yield break;
+        CardController defender = playerFieldCardList[0];
         Debug.Log("相手のターン");
 
-        yield return new WaitForSeconds(1);
-
-        
         /*場にカードをだす*/
         //手札のカードリストを取得
         CardController[]handcardList = enemyHandTransform.GetComponentsInChildren<CardController>();
+
         //場に出すカードを選択
         int rnd = Random.Range(1, 2);
         CardController enemycard = handcardList[rnd];
+        enemycard.gameObject.GetComponent<CardView>().PanelActive(false);
         //カードを移動
         StartCoroutine(enemycard.movement.MoveToField(enemyFieldTransform));
 
         yield return new WaitForSeconds(1);
 
         /* 攻撃比較 */
+        
         //フィールドのカードリストを取得
         CardController[] fieldCardList = enemyFieldTransform.GetComponentsInChildren<CardController>();
         //attackerカードを選択
         CardController attacker = fieldCardList[0];
-        //defenderカードを選択
-        CardController[] playerFieldCardList = playerFieldTransform.GetComponentsInChildren<CardController>();
-        CardController defender = playerFieldCardList[0];
         //attackerとdefenderを戦わせる
         StartCoroutine(attacker.movement.MoveToTarget(defender.transform));
 
