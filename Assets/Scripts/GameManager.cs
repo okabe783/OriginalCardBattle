@@ -122,12 +122,14 @@ public class GameManager : MonoBehaviour
         playerDeck = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8};
          enemyDeck = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8};
 
-        if (playerscore == 3)
+        if (playerscore == 4)
         {
             playerscore = 0;
+            enemyscore = 0;
         }
         else
         {
+            playerscore = 0;
             enemyscore = 0;
         }
        
@@ -236,7 +238,7 @@ public class GameManager : MonoBehaviour
         //カードを移動
         StartCoroutine(enemycard.movement.MoveToField(enemyFieldTransform));
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
 
         /* 攻撃比較 */
         
@@ -244,6 +246,7 @@ public class GameManager : MonoBehaviour
         CardController[] fieldCardList = enemyFieldTransform.GetComponentsInChildren<CardController>();
         //attackerカードを選択
         CardController attacker = fieldCardList[0];
+        yield return new WaitForSeconds(1);
         //attackerとdefenderを戦わせる
         StartCoroutine(attacker.movement.MoveToTarget(defender.transform));
 
