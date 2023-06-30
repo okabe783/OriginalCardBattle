@@ -21,8 +21,8 @@ public class GameManager : MonoBehaviour
     bool isPlayerSetting;
 
     //デッキの作成
-    List<int> playerDeck = new List<int>(){1,2,3,4,5,6,7,8},
-              enemyDeck = new List<int>() {1,2,3,4,5,6,7,8};
+    List<int> playerDeck = new List<int>(){1,2,3,4,5,6},
+              enemyDeck = new List<int>() {1,2,3,4,5,6};
 
     [SerializeField] Text playerHeroHpText,
                           enemyHeroHpText;
@@ -119,8 +119,8 @@ public class GameManager : MonoBehaviour
 
 
         //デッキを生成
-        playerDeck = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8};
-         enemyDeck = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8};
+        playerDeck = new List<int>() { 1, 2, 3, 4, 5, 6};
+         enemyDeck = new List<int>() { 1, 2, 3, 4, 5, 6};
 
         if (playerscore == 4)
         {
@@ -139,7 +139,7 @@ public class GameManager : MonoBehaviour
     void SettingInitHand()
     {
         //カードをそれぞれに8枚配る
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < 6; i++)
         {
             GiveCardToHand(playerDeck,playerHandTransform);
             isEnemyCardGenerateTurn=true;
