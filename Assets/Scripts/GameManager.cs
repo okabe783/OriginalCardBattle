@@ -122,7 +122,7 @@ public class GameManager : MonoBehaviour
         playerDeck = new List<int>() { 1, 2, 3, 4, 5, 6};
          enemyDeck = new List<int>() { 1, 2, 3, 4, 5, 6};
 
-        if (playerscore == 4)
+        if (playerscore == 3)
         {
             playerscore = 0;
             enemyscore = 0;
@@ -138,7 +138,7 @@ public class GameManager : MonoBehaviour
     }
     void SettingInitHand()
     {
-        //カードをそれぞれに8枚配る
+        //カードをそれぞれに6枚配る
         for (int i = 0; i < 6; i++)
         {
             GiveCardToHand(playerDeck,playerHandTransform);
@@ -283,7 +283,7 @@ public class GameManager : MonoBehaviour
     void CheckScore()   //リザルト画面の表示
     {
        
-        if (playerscore >= 4)
+        if (playerscore >= 3)
         {
             resultText.text = "WIN";
             resultPanel.SetActive(true);
