@@ -193,12 +193,10 @@ public class GameManager : MonoBehaviour
         if (isPlayerSetting)
         {
             PlayerSetting();
-          
         }
         else
         {
           StartCoroutine(EnemySetting());
-           
         }
     }
 
