@@ -255,21 +255,13 @@ public class GameManager : MonoBehaviour
 
         void CardsBattle(CardController attacker, CardController defender)
         {
-            Debug.Log("CardBattle");
-            Debug.Log("attacker HP:" + attacker.model.hp);
-            Debug.Log("defender HP:" + defender.model.hp);
-
             attacker.model.Attack(defender);
             defender.model.Attack(attacker);
-
-            Debug.Log("attacker HP:" + attacker.model.hp);
-            Debug.Log("defender HP:" + defender.model.hp);
             attacker.CheckAlive(defender);
             CheckScore();
-            //defender.CheckAlive();
         }  
     }
-   public  void PlayerScoreUp()
+    public  void PlayerScoreUp()
     {
         playerscore ++;
     }
