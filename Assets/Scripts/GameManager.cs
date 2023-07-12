@@ -100,23 +100,23 @@ public class GameManager : MonoBehaviour
     public void ReStart() //タイトルから再スタートをする処理
     {
         //handとFieldのカードを削除
-        foreach(Transform card in playerHandTransform)
-        {
-               Destroy(card.gameObject);
-        }
-        foreach (Transform card in playerFieldTransform)
-        {
-            Destroy(card.gameObject);
-        }
-        foreach (Transform card in enemyHandTransform)
-        {
-            Destroy(card.gameObject);
-        }
-        foreach (Transform card in enemyFieldTransform)
-        {
-            Destroy(card.gameObject);
-        }
-
+        //foreach(Transform card in playerHandTransform)
+        //{
+        //       Destroy(card.gameObject);
+        //}
+        //foreach (Transform card in playerFieldTransform)
+        //{
+        //    Destroy(card.gameObject);
+        //}
+        //foreach (Transform card in enemyHandTransform)
+        //{
+        //    Destroy(card.gameObject);
+        //}
+        //foreach (Transform card in enemyFieldTransform)
+        //{
+        //    Destroy(card.gameObject);
+        //}
+        DontDestroyOnLoad(this.gameObject);
 
         //デッキを生成
         playerDeck = new List<int>() { 1, 2, 3, 4, 5, 6};
