@@ -69,11 +69,7 @@ public class GameManager : MonoBehaviour
         enemyDefaultManaCost = 1;
         ShowManaCost();
         SettingInitHand();
-      
-
-
         isPlayerSetting = true;
-      
         TurnCalc();
     }
 
@@ -95,27 +91,9 @@ public class GameManager : MonoBehaviour
         }
         ShowManaCost();
     }
-
-
     public void ReStart() //タイトルから再スタートをする処理
     {
-        //handとFieldのカードを削除
-        //foreach(Transform card in playerHandTransform)
-        //{
-        //       Destroy(card.gameObject);
-        //}
-        //foreach (Transform card in playerFieldTransform)
-        //{
-        //    Destroy(card.gameObject);
-        //}
-        //foreach (Transform card in enemyHandTransform)
-        //{
-        //    Destroy(card.gameObject);
-        //}
-        //foreach (Transform card in enemyFieldTransform)
-        //{
-        //    Destroy(card.gameObject);
-        //}
+        
         DontDestroyOnLoad(this.gameObject);
 
         //デッキを生成
@@ -147,7 +125,7 @@ public class GameManager : MonoBehaviour
             Shuffle();
             GiveCardToHand(enemyDeck,enemyHandTransform);
             isEnemyCardGenerateTurn = false;
-            //Debug.Log(enemyDeck.Count);
+            
         }
     }
     void GiveCardToHand(List<int> deck, Transform hand)
