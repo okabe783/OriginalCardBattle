@@ -1,11 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] Transform playerHandTransform,
+    [SerializeField]
+    Transform playerHandTransform,
                                enemyHandTransform,
                                playerFieldTransform,
                                enemyFieldTransform;
@@ -21,17 +24,18 @@ public class GameManager : MonoBehaviour
     bool isPlayerSetting;
 
     //デッキの作成
-    List<int> playerDeck = new List<int>(){1,2,3,4,5,6},
-              enemyDeck = new List<int>() {1,2,3,4,5,6};
+    List<int> _playerDeck = new List<int>() { 1, 2, 3, 4, 5, 6 },
+              enemyDeck = new List<int>() { 1, 2, 3, 4, 5, 6 };
 
-    [SerializeField] Text playerHeroHpText,
+    [SerializeField]
+    Text playerHeroHpText,
                           enemyHeroHpText;
 
     [SerializeField] Text playerManaCostText;
     [SerializeField] Text enemyManaCostText;
 
-    public  int playerManaCost;
-    public  int enemyManaCost;
+    public int playerManaCost;
+    public int enemyManaCost;
     public int playerDefaultManaCost;
     public int enemyDefaultManaCost;
     public static GameManager instance;
@@ -73,7 +77,7 @@ public class GameManager : MonoBehaviour
         TurnCalc();
     }
 
-    public  void ShowManaCost()
+    public void ShowManaCost()
     {
         playerManaCostText.text = playerManaCost.ToString();
         enemyManaCostText.text = enemyManaCost.ToString();
@@ -93,12 +97,12 @@ public class GameManager : MonoBehaviour
     }
     public void ReStart() //タイトルから再スタートをする処理
     {
-        
+
         DontDestroyOnLoad(this.gameObject);
 
         //デッキを生成
-        playerDeck = new List<int>() { 1, 2, 3, 4, 5, 6};
-         enemyDeck = new List<int>() { 1, 2, 3, 4, 5, 6};
+        _playerDeck = new List<int>() { 1, 2, 3, 4, 5, 6 };
+        enemyDeck = new List<int>() { 1, 2, 3, 4, 5, 6 };
 
         if (playerscore == 3)
         {
@@ -110,40 +114,46 @@ public class GameManager : MonoBehaviour
             playerscore = 0;
             enemyscore = 0;
         }
-       
+
 
         StartGame();
     }
     void SettingInitHand()
     {
-        //カードをそれぞれに6枚配る
+        // カードをそれぞれに6枚配る
         for (int i = 0; i < 6; i++)
         {
-            GiveCardToHand(playerDeck,playerHandTransform);
-            isEnemyCardGenerateTurn=true;
+            // 偶数のカードを抽出
+            List<int> evenCards = _playerDeck.Where(card => card % 2 == 0).ToList();
 
+            // 偶数のカードを手札に追加
+            GiveCardToHand(evenCards, playerHandTransform);
+
+            isEnemyCardGenerateTurn = true;
             Shuffle();
-            GiveCardToHand(enemyDeck,enemyHandTransform);
+            GiveCardToHand(enemyDeck, enemyHandTransform);
             isEnemyCardGenerateTurn = false;
-            
         }
     }
     void GiveCardToHand(List<int> deck, Transform hand)
     {
-        int cardID = deck[0];
-        deck.RemoveAt(0);
-        CreateCard(cardID, hand) ;      
+        if(deck.Count > 0)
+        {
+            int cardID = deck[0];
+            deck.RemoveAt(0);
+            CreateCard(cardID, hand);
+        }
     }
-    void CreateCard(int cardID,Transform hand)
+    void CreateCard(int cardID, Transform hand)
     {
         //カードの生成とデータの受け渡し
         CardController card = Instantiate(cardPrefab, hand); //カードを生成するときはカードを親として生成する
 
-        if(isEnemyCardGenerateTurn == true)
+        if (isEnemyCardGenerateTurn == true)
         {
             card.gameObject.GetComponent<CardView>().PanelActive(true);
         }
-        card.Init(cardID,isEnemyCardGenerateTurn);
+        card.Init(cardID, isEnemyCardGenerateTurn);
     }
 
     void Shuffle()
@@ -152,12 +162,12 @@ public class GameManager : MonoBehaviour
         int n = enemyDeck.Count;
 
         //nが1より小さくなるまで繰り返す
-        while(n > 0)
+        while (n > 0)
         {
             n--;
 
             //kは0～n+1の間のランダムな値
-            int k =UnityEngine.Random.Range(0, n + 1);
+            int k = UnityEngine.Random.Range(0, n + 1);
 
             //k番目のカードをtempに代入
             int temp = enemyDeck[k];
@@ -174,7 +184,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-          StartCoroutine(EnemySetting());
+            StartCoroutine(EnemySetting());
         }
     }
 
@@ -182,12 +192,12 @@ public class GameManager : MonoBehaviour
     {
         isPlayerSetting = !isPlayerSetting;
         if (isPlayerSetting)
-        playerManaCost = playerDefaultManaCost;
+            playerManaCost = playerDefaultManaCost;
         else
         {
             enemyManaCost = enemyDefaultManaCost;
         }
-        
+
         TurnCalc();
     }
 
@@ -205,10 +215,10 @@ public class GameManager : MonoBehaviour
 
         /*場にカードをだす*/
         //手札のカードリストを取得
-        CardController[]handcardList = enemyHandTransform.GetComponentsInChildren<CardController>();
+        CardController[] handcardList = enemyHandTransform.GetComponentsInChildren<CardController>();
 
         //場に出すカードを選択
-        int rnd = Random.Range(1, 2);
+        int rnd = UnityEngine.Random.Range(1, 2);
         CardController enemycard = handcardList[rnd];
         enemycard.gameObject.GetComponent<CardView>().PanelActive(false);
         //カードを移動
@@ -217,7 +227,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         /* 攻撃比較 */
-        
+
         //フィールドのカードリストを取得
         CardController[] fieldCardList = enemyFieldTransform.GetComponentsInChildren<CardController>();
         //attackerカードを選択
@@ -226,7 +236,7 @@ public class GameManager : MonoBehaviour
         //attackerとdefenderを戦わせる
         StartCoroutine(attacker.movement.MoveToTarget(defender.transform));
 
-        CardsBattle(attacker,defender);
+        CardsBattle(attacker, defender);
 
         yield return new WaitForSeconds(1);
         SettingTurn();
@@ -237,26 +247,26 @@ public class GameManager : MonoBehaviour
             defender.model.Attack(attacker);
             attacker.CheckAlive(defender);
             CheckScore();
-        }  
+        }
     }
-    public  void PlayerScoreUp()
+    public void PlayerScoreUp()
     {
-        playerscore ++;
+        playerscore++;
     }
     public void EnemyScoreUp()
     {
-        enemyscore ++;
+        enemyscore++;
     }
-   
+
     void CheckScore()   //リザルト画面の表示
     {
-       
+
         if (playerscore >= 3)
         {
             resultText.text = "WIN";
             resultPanel.SetActive(true);
         }
-        else if (enemyscore >= 3) 
+        else if (enemyscore >= 3)
         {
             resultText.text = "LOSE";
             resultPanel.SetActive(true);
